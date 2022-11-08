@@ -23,7 +23,8 @@ export const createGame = (game) => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
-        }
+        },
+        body: JSON.stringify(game)
     })
     .then(response => response.json(game))
 }

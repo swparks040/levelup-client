@@ -55,7 +55,7 @@ export const GameForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="number_of_players">Number of Players: </label>
-                    <input type="text" name="number_of_players" id="number_of_players" required autoFocus className="form-control"
+                    <input type="number" name="number_of_players" id="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame.numberOfPlayers}
                         onChange={changeGameState}
                     />
@@ -64,7 +64,7 @@ export const GameForm = () => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="skill_level">Skill Level: </label>
-                    <input type="text" name="skill_level" id="skill_level" required autoFocus className="form-control"
+                    <input type="number" name="skill_level" id="skillLevel" required autoFocus className="form-control"
                         value={currentGame.skillLevel}
                         onChange={changeGameState}
                     />
@@ -74,7 +74,7 @@ export const GameForm = () => {
                 <div className="form-group">
                 <label htmlFor="game_type">Game Type: </label>
                 <select
-                    value={currentGame.gameTypeId} name="gameType" id="gameTypeId"
+                    value={currentGame.gameTypeId} name="game_type" id="gameTypeId"
                     onChange={changeGameState}>
                     <option value="0">Choose Game Type</option>
                     {
