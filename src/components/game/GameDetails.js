@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getGameById } from "../../managers/GameManager";
+import { deleteGame, getGameById, getGames } from "../../managers/GameManager";
 
 export const GameDetails = () => {
   const { gameId } = useParams();
@@ -32,6 +32,12 @@ export const GameDetails = () => {
         onClick={() => navigate(`/games/${game.id}/edit`)}
       >
         Update
+      </button>
+      <button
+        className="btn btn-primary"
+        onClick={() => deleteGame(gameId).then(navigate({ pathname: "/games"})).then(getGames)}
+      >
+        Delete
       </button>
     </>
   );

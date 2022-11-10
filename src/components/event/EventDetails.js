@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEventById } from "../../managers/EventManager";
+import { deleteEvent, getEventById, getEvents } from "../../managers/EventManager";
 
 export const EventDetails = () => {
     const { eventId } = useParams();
@@ -30,6 +30,12 @@ export const EventDetails = () => {
           >
             Update
           </button>
+          <button
+        className="btn btn-primary"
+        onClick={() => deleteEvent(eventId).then(navigate({ pathname: "/events"})).then(getEvents)}
+      >
+        Delete
+      </button>
         </>
       );
     };

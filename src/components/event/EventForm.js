@@ -134,7 +134,10 @@ export const EventForm = () => {
         }}
         className="btn btn-primary"
       >
-        Create Event
+        Create
+      </button>
+      <button className="btn btn-primary" onClick={() => navigate(`/events`)}>
+        Back
       </button>
     </form>
   );
