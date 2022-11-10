@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from 'react-router-dom'
-import { createGame, getGameTypes } from '../../managers/GameManager.js'
+import { useNavigate, useParams } from 'react-router-dom'
+import { updateGame, getGameTypes } from '../../managers/GameManager.js'
 
 
-export const GameForm = () => {
-    const navigate = useNavigate()
+export const UpdateGameForm = () => {
+    
+    const {gameId} = useParams()
     const [gameTypes, setGameTypes] = useState([])
-
-    /*
-        Since the input fields are bound to the values of
-        the properties of this state variable, you need to
-        provide some default values.
-    */
-    const [currentGame, setCurrentGame] = useState({
+    const [currentGame, updateCurrentGame] = useState({
         skillLevel: 1,
         numberOfPlayers: 0,
         title: "",
@@ -22,20 +17,29 @@ export const GameForm = () => {
 
     useEffect(
         () => {
-           getGameTypes().then(data => setGameTypes(data))
+           getGameTypes().then(gameTypeArray => setGameTypes(gameTypeArray))
         // TODO: Get the game types, then set the state
     }, [])
 
+    useEffect(() => {
+        fetch(`http://localhost:8000/games/${gameId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            updateGame(data);
+          });
+      }, [gameId]);
+ 
+    const navigate = useNavigate()
+
     const changeGameState = (domEvent) => {
-        // TODO: Complete the onChange function
        const copy = {...currentGame } 
        copy[domEvent.target.id] = domEvent.target.value
-       setCurrentGame(copy)
+       updateGame(copy)
     }
 
     return (
         <form className="gameForm">
-            <h2 className="gameForm__title">Register New Game</h2>
+            <h2 className="gameForm__title">Update This Game</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
@@ -98,14 +102,14 @@ export const GameForm = () => {
                         game_type: parseInt(currentGame.gameTypeId)
                     }
                     // Send POST request to your API
-                    createGame(game)
+                    updateCurrentGame(game)
                         .then(() => navigate("/games"))
                 }}
-                className="btn btn-primary">Create</button>
+                className="btn btn-primary">Update</button>
                 <button
         
         className="btn btn-primary"
-        onClick={() => navigate(`/games`)}
+        onClick={() => navigate(`/games/${gameId}`)}
       >
         Back
       </button>
