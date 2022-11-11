@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getEvents } from "../../managers/EventManager.js";
+import { getEvents, leaveEvent, joinEvent } from "../../managers/EventManager.js";
 
 export const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -22,8 +22,7 @@ export const EventList = () => {
         </button>
       </header>
       {events.map((event) => {
-        return (
-          <section key={`event--${event.id}`}>
+      return<section key={`event--${event.id}`}>
             {event.title}
             <div className="event__description">
               Description: <Link to={`/events/${event.id}`}>{event.description}</Link>
@@ -34,8 +33,13 @@ export const EventList = () => {
             <div className="event__organizer">
               Organized by: {event.organizer}
             </div>
+            {
+            event.joined 
+            ? <button className ="btn btn-primary" onClick={() => leaveEvent(event.id).then(() => getEvents().then((data) => setEvents(data)))}>Leave</button>
+            : <button className ="btn btn-primary" onClick={() => joinEvent(event.id).then(() => getEvents().then((data) => setEvents(data)))}>Join</button>
+            }
           </section>
-        );
+        ;
       })}
     </article>
   );
